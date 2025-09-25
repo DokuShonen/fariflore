@@ -45,7 +45,7 @@
         header {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
-            padding: 0.8rem 0; /* Légèrement réduit pour s'adapter au logo */
+            padding: 0.8rem 0;
             position: fixed;
             width: 100%;
             top: 0;
@@ -60,27 +60,24 @@
             align-items: center;
         }
         
-        /* --- NOUVEAUX STYLES POUR LE LOGO --- */
         .logo {
             font-family: var(--header-font);
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--dark-color);
             text-decoration: none;
-            display: flex; /* Utilise Flexbox pour aligner l'image et le texte */
-            align-items: center; /* Centre verticalement */
+            display: flex;
+            align-items: center;
         }
 
         .logo-img {
-            width: 40px; /* Taille du logo */
-            height: 40px; /* Taille du logo */
-            border-radius: 50%; /* Rend l'image parfaitement circulaire */
-            margin-right: 12px; /* Espace entre le logo et le texte */
-            object-fit: cover; /* Assure que l'image remplit bien le cercle */
-            border: 2px solid var(--primary-color); /* Ajoute une petite bordure optionnelle */
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 12px;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
         }
-        /* --- FIN DES NOUVEAUX STYLES --- */
-
 
         .nav-links a {
             color: var(--dark-color);
@@ -344,6 +341,26 @@
             color: var(--primary-color);
             margin-bottom: 1rem;
         }
+        
+        /* --- NOUVEAU STYLE POUR LE BOUTON D'ÉVÉNEMENT --- */
+        .event-button {
+            background: var(--dark-color);
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            margin-top: 1.5rem;
+            display: inline-block;
+        }
+
+        .event-button:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        /* --- FIN DU NOUVEAU STYLE --- */
 
         /* Footer */
         footer {
@@ -374,7 +391,6 @@
     <header>
         <div class="container">
             <nav>
-                <!-- MODIFICATION ICI : Ajout de la balise <img> pour le logo -->
                 <a href="#" class="logo">
                     <img src="https://via.placeholder.com/40x40/bfa181/FFFFFF?Text=F" alt="Logo Fariflore Events" class="logo-img">
                     Fariflore Events
@@ -492,15 +508,19 @@
                 <h2 class="section-title fade-in">Offres & Événements</h2>
                 <p class="section-subtitle fade-in">Ne manquez pas nos promotions spéciales et nos ateliers pour apprendre l'art de la surprise.</p>
                 <div class="fade-in">
+                    <!-- MODIFICATION ICI : Ajout du bouton -->
                     <div class="event-card">
                         <h3>Promo Spéciale Fête des Mères</h3>
                         <p class="event-date">Offre valable jusqu'au 25 Mai</p>
                         <p>Bénéficiez de -20% sur nos bouquets d'argent (à partir de 30000f) pour célébrer la plus belle des mamans.</p>
+                        <button class="event-button" onclick="inquireAboutEvent('Promo Spéciale Fête des Mères')">Contactez-nous</button>
                     </div>
+                    <!-- MODIFICATION ICI : Ajout du bouton -->
                     <div class="event-card">
                         <h3>Atelier : L'Art d'Offrir</h3>
                         <p class="event-date">Le 15 Juin à 10h</p>
                         <p>Rejoignez-nous pour une formation exclusive sur la création de cadeaux personnalisés. Inscriptions ouvertes sur WhatsApp.</p>
+                        <button class="event-button" onclick="inquireAboutEvent('Atelier : L\'Art d\'Offrir')">Contactez-nous</button>
                     </div>
                 </div>
             </div>
@@ -523,7 +543,7 @@
         // --- Numéro de téléphone à personnaliser ---
         const whatsappNumber = '64502287'; // Format international sans '+' ni '00'
 
-        // --- Fonctions WhatsApp (inchangées) ---
+        // --- Fonctions WhatsApp ---
         function orderRealisation(realisationName) {
             const message = `Bonjour Fariflore Events, j'ai beaucoup aimé votre réalisation "${realisationName}" et j'aimerais en savoir plus.`;
             const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
@@ -532,6 +552,14 @@
 
         function orderProduct(productName, productPrice) {
             const message = `Bonjour, je suis intéressé(e) par l'article suivant de votre boutique :\n\n*Produit :* ${productName}\n*Prix :* ${productPrice}`;
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // --- NOUVELLE FONCTION POUR LES ÉVÉNEMENTS ---
+        function inquireAboutEvent(eventName) {
+            // Note: L'apostrophe dans "L'Art d'Offrir" est échappée (\') dans le HTML pour ne pas casser la chaîne de caractères.
+            const message = `Bonjour Fariflore Events. Je souhaiterais avoir plus d'informations concernant votre offre/événement : "${eventName}".`;
             const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
         }
